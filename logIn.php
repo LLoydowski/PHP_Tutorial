@@ -1,12 +1,8 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    try {
-        $name = $_POST["name"];
-        $password = $_POST["password"];
-    } catch (Exception $e) {
-        die("Error: " . $e);
-    }
+    $name = $_POST["name"];
+    $password = $_POST["password"];
 
     $servername = "localhost";
     $username = "postsApp";

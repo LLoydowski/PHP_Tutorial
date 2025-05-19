@@ -1,9 +1,9 @@
 <?php
 
-$message = '';
+$message = ''; // Creates variable containing message
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if ($_POST["realMethod"] == "delete") { // <- Bullshit detected 🚨🚨🚨
+    if ($_POST["realMethod"] == "delete") { // Checks what method was really used (because PHP doesnt support more), it was set in one of the hidden inputs
         $id = $_POST["post"];
 
 
@@ -21,33 +21,33 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sql_select = "SELECT imgSrc FROM posts WHERE id = $id LIMIT 1";
         $result = $conn->query($sql_select);
 
-        $imgSrcToDelete = null;
+        $imgSrcToDelete = null; // Creates variable storing path to the image if one exists (now is blank)
 
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $imgSrcToDelete = $row["imgSrc"];
+            $imgSrcToDelete = $row["imgSrc"]; // Setting the variable with path to the image
 
-            if ($imgSrcToDelete && file_exists($imgSrcToDelete)) {
-                if (unlink($imgSrcToDelete)) {
-                    $message .= " Plik obrazu usunięty.";
+            if ($imgSrcToDelete && file_exists($imgSrcToDelete)) { // Checking if the file exists
+                if (unlink($imgSrcToDelete)) { // Removing the file
+                    $message .= "File deleted.";
                 } else {
-                    $message .= " Błąd podczas usuwania pliku: " . error_get_last()['message'];
+                    $message .= "Error deleting file: " . error_get_last()['message']; // Handling errors
                 }
             } elseif ($imgSrcToDelete) {
-                $message .= " Plik obrazu nie istnieje.";
+                $message .= "File doesn't exist.";
             }
         } else {
-            $message .= "Nie znaleziono posta o podanym ID: " . $id;
+            $message .= "Image of this id doesn't exist: " . $id;
         }
 
-        if ($result && $result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) { // Removing the record from database
             $sql_delete = "DELETE FROM posts WHERE id = $id";
             if ($conn->query($sql_delete) === TRUE) {
                 $message .= " Post was deleted";
                 header("Location: /posts/");
                 die();
             } else {
-                $message .= " Błąd podczas usuwania posta z bazy danych: " . $conn->error;
+                $message .= "Error removing post from databse: " . $conn->error;
                 $message .= "<a href='posts/'>Go back</a>";
             }
         }
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "UPDATE posts SET title = '$newTitle' WHERE id = $id";
+        $sql = "UPDATE posts SET title = '$newTitle' WHERE id = $id"; // This query modifies the data
         if ($conn->query($sql) === TRUE) {
             $message .= "New user added succesfully";
             header("Location: /posts/");
@@ -108,11 +108,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <div class="container">
         <nav>
             <?php
-            if (!isset($_COOKIE["name"])) {
+            if (!isset($_COOKIE["name"])) { // Checks if user is logged in
                 echo '
-            <a href="login.html">Login</a>';
+            <a href="login.html">Login</a>'; // If not display link to login page
             } else {
-                echo '<a href="./addPost.php">Add post</a>';
+                echo '<a href="./addPost.php">Add post</a>'; // Otherwise displays link to add post page.
             }
             ?>
             <form method="post">
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+                while ($row = $result->fetch_assoc()) { // Iterates through every posts and displays it
                     $id = $row["id"];
                     $title = $row["title"];
                     $imgSrc = $row["imgSrc"];
@@ -161,13 +161,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     }
 
                     if (isset($_COOKIE["name"])) {
-                        if ($_COOKIE["name"] == $author) {
+                        if ($_COOKIE["name"] == $author) { // If the author is the user creates delete and modify buttons
                             echo "<form method='post'>
                             <input type='hidden' name='realMethod' value='delete'>
                             <input type='hidden' name='post' value='$id'>
                             <button> Delete </button>
-                            </form>"; // <- Jebane gówno detected
-            
+                            </form>";
+
                             echo "<form method='post'>
                             <input type='hidden' name='realMethod' value='put'>
                             <input type='hidden' name='post' value='$id'>
@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 <input type='text' name='newTitle'>
                             </label>
                             <button> Modify </button>
-                            </form>"; // <- Jebane gówno detected
+                            </form>";
                         }
                     }
 

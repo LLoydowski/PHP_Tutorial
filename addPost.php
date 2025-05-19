@@ -1,11 +1,9 @@
 <?php
 $message = "";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    try {
-        $title = $_POST['title'];
-    } catch (Exception $e) {
-        die("Error: " . $e);
-    }
+
+    $title = $_POST['title'];
+
 
     $servername = "localhost";
     $username = "postsApp";
@@ -18,21 +16,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    if (!isset($_COOKIE["name"])) {
-        header("Location: /login.html/");
+    if (!isset($_COOKIE["name"])) { // Checks if user is logged in by checking his cookies
+        header("Location: /login.html/"); // Redirects the user
         die();
     }
 
     $name = $_COOKIE["name"];
 
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $imageFile = $_FILES['image'];
-        $uploadDir = 'imgs/';
-        $fileName = time() . '_' . $imageFile['name'];
-        $targetFilePath = $uploadDir . $fileName;
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) { // Checks if the file was uploaded
+        $imageFile = $_FILES['image']; // Gets the file
+        $uploadDir = 'imgs/'; // Storest directory with files
+        $fileName = time() . '_' . $imageFile['name']; // Creates new filename for the file
+        $targetFilePath = $uploadDir . $fileName; // Connects imgs and filename
 
-        if (move_uploaded_file($imageFile['tmp_name'], $targetFilePath)) {
-            $sql = "INSERT INTO posts (title, imgSrc, author) VALUES ('$title', '$targetFilePath', '$name')";
+        if (move_uploaded_file($imageFile['tmp_name'], $targetFilePath)) { // Moves the file to imgs directory
+            $sql = "INSERT INTO posts (title, imgSrc, author) VALUES ('$title', '$targetFilePath', '$name')"; // Inserts Title, path and author to the posts table
             if (!$conn->query($sql)) {
                 $message = "Error: " . $sql . "<br>" . $conn->error;
             } else {
@@ -42,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $message = "Error while uploading the file";
         }
     } else {
-        $sql = "INSERT INTO posts (title, imgSrc, author) VALUES ('$title', NULL, '$name')";
+        $sql = "INSERT INTO posts (title, imgSrc, author) VALUES ('$title', NULL, '$name')"; // Also inserts title and author but without image.
         if (!$conn->query($sql)) {
             $message = "Error: " . $sql . "<br>" . $conn->error;
         } else {
