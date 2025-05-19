@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container">
+            <form method="post" action="logIn.php">
+                <h1>Log in</h1>
+                <label for="name">
+                    Login:
+                    <input required type="text" name="name" />
+                </label>
+                <label for="password">
+                    Password:
+                    <input required type="password" name="password" />
+                </label>
+                <button type="submit">Log in</button>
+            </form>
+            <form method="post" action="signIn.php">
+                <h1>Sign in</h1>
+                <label for="name">
+                    Login:
+                    <input required type="text" name="name" />
+                </label>
+                <label for="name">
+                    Password:
+                    <input required type="password" name="password" />
+                </label>
+                <button type="submit">Sign in</button>
+            </form>
+        </div>
+    </body>
+</html>
