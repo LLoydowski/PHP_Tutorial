@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $servername = "localhost";
     $username = "postsApp";
     $db_password = "1234";
-    $db = "posts";
+    $db = "myapp";
 
     $conn = new mysqli($servername, $username, $db_password, $db);
 
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 <body>
     <nav>
-        <a href="/posts">Go back</a>
+        <a href="/myApp">Go back</a>
     </nav>
     <form method="post" enctype="multipart/form-data">
         <h1>Add post</h1>

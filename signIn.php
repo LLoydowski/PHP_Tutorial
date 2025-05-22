@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $servername = "localhost";
     $username = "postsApp";
     $db_password = "1234";
-    $db = "posts";
+    $db = "myapp";
 
     $conn = new mysqli($servername, $username, $db_password, $db);
 
@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         echo "New user added succesfully";
         setcookie("name", $name);
 
-        header("Location: /posts/");
+        header("Location: /myApp/");
         die();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
-        echo "<a href='posts/login.html'>Go back</a>";
+        echo "<a href='myApp/login.html'>Go back</a>";
     }
 
     $conn->close();

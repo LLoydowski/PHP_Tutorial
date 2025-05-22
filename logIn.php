@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $servername = "localhost";
     $username = "postsApp";
     $db_password = "1234";
-    $db = "posts";
+    $db = "myapp";
 
     $conn = new mysqli($servername, $username, $db_password, $db);
 
@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     if ($result->num_rows > 0) {
         setcookie("name", $name);
-        header("Location: /posts/");
+        header("Location: /myApp/");
         die();
     } else {
-        echo "Wrong name or password <a href='posts/login.html'>Go back</a>";
+        echo "Wrong name or password <a href='myApp/login.html'>Go back</a>";
     }
 
     $conn->close();

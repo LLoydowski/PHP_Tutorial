@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $servername = "localhost";
         $username = "postsApp";
         $db_password = "1234";
-        $db = "posts";
+        $db = "myapp";
 
         $conn = new mysqli($servername, $username, $db_password, $db);
 
@@ -44,11 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $sql_delete = "DELETE FROM posts WHERE id = $id";
             if ($conn->query($sql_delete) === TRUE) {
                 $message .= " Post was deleted";
-                header("Location: /posts/");
+                header("Location: /myApp/");
                 die();
             } else {
                 $message .= "Error removing post from databse: " . $conn->error;
-                $message .= "<a href='posts/'>Go back</a>";
+                $message .= "<a href='myApp/'>Go back</a>";
             }
         }
 
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $servername = "localhost";
         $username = "postsApp";
         $db_password = "1234";
-        $db = "posts";
+        $db = "myapp";
 
         $conn = new mysqli($servername, $username, $db_password, $db);
 
@@ -73,11 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $sql = "UPDATE posts SET title = '$newTitle' WHERE id = $id"; // This query modifies the data
         if ($conn->query($sql) === TRUE) {
             $message .= "New user added succesfully";
-            header("Location: /posts/");
+            header("Location: /myApp/");
             die();
         } else {
             $message .= "Error: " . $sql . "<br>" . $conn->error;
-            $message .= "<a href='posts/login.html'>Go back</a>";
+            $message .= "<a href='myApp/login.html'>Go back</a>";
         }
 
     }
@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $servername = "localhost";
             $username = "postsApp";
             $db_password = "1234";
-            $db = "posts";
+            $db = "myapp";
 
             $conn = new mysqli($servername, $username, $db_password, $db);
             $sql = "SELECT * from posts";
@@ -152,7 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $title = $row["title"];
                     $imgSrc = $row["imgSrc"];
                     $author = $row["author"];
-
 
                     echo "<div class='post'> <h1>$title</h1>";
 
